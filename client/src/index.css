@@ -31,6 +31,15 @@
   border-bottom: solid gray !important;
 }
 
+.contactus {
+  margin: 0;
+  padding: 0;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .nav-link{
   font-weight: 300 !important;
 }
@@ -85,5 +94,12 @@
   text-decoration: none;
   padding: 10px;
   margin: 10px;
+}
 
+.Register{
+  display: flex;
+  flex-direction: column;
+  height: 70vh  ;
+  align-items: center;
+  justify-content: center;
 }
