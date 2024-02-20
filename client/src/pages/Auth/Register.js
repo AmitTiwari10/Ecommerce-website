@@ -9,6 +9,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,11 +37,10 @@ const Register = () => {
     }
   };
   return (
-    <Layout title="Reigster - Swadeshi Bazar">
-      <div className="form-container">
-        <h1>Register Page</h1>
-
+    <Layout title="Register - Ecommer App">
+      <div className="form-container" style={{ minHeight: "90vh" }}>
         <form onSubmit={handleSubmit}>
+          <h4 className="title">REGISTER FORM</h4>
           <div className="mb-3">
             <input
               type="text"
@@ -50,6 +50,7 @@ const Register = () => {
               id="exampleInputEmail1"
               placeholder="Enter Your Name"
               required
+              autoFocus
             />
           </div>
           <div className="mb-3">
@@ -59,7 +60,7 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Your Email"
+              placeholder="Enter Your Email "
               required
             />
           </div>
@@ -81,25 +82,34 @@ const Register = () => {
               onChange={(e) => setPhone(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Your Phone Number"
+              placeholder="Enter Your Phone"
               required
             />
-
-            <div className="mb-3">
-              <input
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="form-control"
-                id="exampleInputEmail1"
-                placeholder="Enter Your Address"
-                required
-              />
-            </div>
           </div>
-
+          <div className="mb-3">
+            <input
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="form-control"
+              id="exampleInputEmail1"
+              placeholder="Enter Your Address"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              className="form-control"
+              id="exampleInputEmail1"
+              placeholder="What is Your Favorite sports"
+              required
+            />
+          </div>
           <button type="submit" className="btn btn-primary">
-            Submit
+            REGISTER
           </button>
         </form>
       </div>
