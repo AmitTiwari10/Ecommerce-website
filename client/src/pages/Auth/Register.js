@@ -22,6 +22,7 @@ const Register = () => {
           password,
           phone,
           address,
+          answer,
         }
       );
       console.log("response", response);
