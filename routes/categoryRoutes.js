@@ -36,8 +36,8 @@ router.get("/get-category", categoryController);
 router.get("/single-category/:slug", singleCategoryController);
 
 //delete category
-router.get(
-  "/delete-category/:slug",
+router.delete(
+  "/delete-category/:id",
   requireSignIn,
   IsAdmin,
   deleteCategoryController
