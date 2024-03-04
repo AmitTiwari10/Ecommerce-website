@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
-
+import axios from "axios";
+import toast from "react-hot-toast";
+import { Select } from "antd";
+const { Options } = Select;
 const CreateProduct = () => {
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [name, setName] = useState("");
+  const [description, setdescription] = useState("");
+  const [price, setprice] = useState("");
+  const [qunatity, setqunatity] = useState("");
+  const [shipping, setshipping] = useState("");
+
+  //get all categories
+  const getAllCategory = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/category/get-category");
+      if (data?.success) {
+        setCategories(data?.category);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong in getting category");
+    }
+  };
+  useEffect(() => {
+    getAllCategory();
+  }, []);
   return (
     <Layout title={"Dashboard-Create Product"}>
       <div className="container-fluid m-3 p-3">
@@ -12,6 +38,24 @@ const CreateProduct = () => {
           </div>
           <div className="col-md-9">
             <h1>Create Product</h1>
+            <div className="m-1 w-75">
+              <Select
+                bordered={false}
+                placeholder="Select a category"
+                size="large"
+                showSearch
+                className="form-select mb-3"
+                onChange={(value) => {
+                  setCategory(value);
+                }}
+              >
+                {categories?.map((c) => (
+                  <Options key={c._id} value={c.name}>
+                    {c.name}
+                  </Options>
+                ))}
+              </Select>
+            </div>
           </div>
         </div>
       </div>
