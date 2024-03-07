@@ -95,6 +95,10 @@
   padding: 10px;
   margin: 10px;
 }
+.product-link{
+  text-decoration: none !important;
+  color: black !important;
+}
 
 /* .Register{
   display: flex;
