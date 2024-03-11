@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout/layout";
 import axios from "axios";
-import { Checkbox } from "antd";
+import { Checkbox, Radio } from "antd";
+import { Prices } from "../components/Prices";
 const HomePage = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
+  const [radio, setRadio] = useState([]);
+
   //get all categories
   const getAllCategory = async () => {
     try {
@@ -22,7 +25,16 @@ const HomePage = () => {
   }, []);
 
   //handle-filter
-  const handleFilter = () => {};
+  const handleFilter = (value, id) => {
+    let all = [...checked];
+    console.log("value", value, id);
+    if (value) {
+      all.push(id);
+    } else {
+      all = all.filter((c) => c !== id);
+    }
+    setChecked(all);
+  };
 
   //get products
   const getAllProducts = async () => {
@@ -34,8 +46,25 @@ const HomePage = () => {
     }
   };
   useEffect(() => {
-    getAllProducts();
-  }, []);
+    if (!checked.length || !radio.length) getAllProducts();
+  }, [checked.length, radio.length]);
+
+  useEffect(() => {
+    if (checked.length || radio.length) filterProducts();
+  }, [checked, radio]);
+
+  //get filter Products
+  const filterProducts = async () => {
+    try {
+      const { data } = await axios.post("/api/v1/product/product-filters", {
+        checked,
+        radio,
+      });
+      setProducts(data?.products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Layout title={"All Products - Best Offers"}>
       <div className="row mt-3">
@@ -53,6 +82,25 @@ const HomePage = () => {
               </Checkbox>
             ))}
           </div>
+          price filter
+          <h4 className="text-center mt-4">Filter By Price</h4>
+          <div className="d-flex flex-column">
+            <Radio.Group onChange={(e) => setRadio(e.target.value)}>
+              {Prices?.map((p) => (
+                <div key={p._id}>
+                  <Radio value={p.array}>{p.name}</Radio>
+                </div>
+              ))}
+            </Radio.Group>
+          </div>
+          <div className="d-flex flex-column">
+            <button
+              className="btn btn-danger"
+              onClick={() => window.location.reload()}
+            >
+              Reset
+            </button>
+          </div>
         </div>
         <div className="col-md-9">
           <h1 className="text-center">All Products</h1>
@@ -66,7 +114,11 @@ const HomePage = () => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{p.name}</h5>
-                  <p className="card-text">{p.description}</p>
+                  <p className="card-text">
+                    {p.description.substring(0, 30)}...
+                  </p>
+                  <p className="card-text">$ {p.price}</p>
+
                   <button className="btn btn-primary ms-1">More Details</button>
                   <button className="btn btn-secondary ms-1">
                     ADD TO CART
