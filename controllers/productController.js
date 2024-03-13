@@ -235,3 +235,55 @@ export const productCountController = async (req, res) => {
     });
   }
 };
+
+//product list base on page
+export const productListController = async (req, res) => {
+  try {
+    const perPage = 1;
+    const page = req.params.page ? req.params.page : 1;
+    const products = await productModel
+      .find({})
+      .select("-photo")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+    res.status(200).send({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      error,
+      message: "Error in per page ctrl",
+    });
+  }
+};
+
+//search product
+export const searchProductController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    const result = await productModel
+      .find({
+        $or: [
+          {
+            name: { $regex: keyword, $option: "i" },
+          },
+          {
+            description: { $regex: keyword, $option: "i" },
+          },
+        ],
+      })
+      .select("-photo");
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      error,
+      message: "Error in searching product api",
+    });
+  }
+};
