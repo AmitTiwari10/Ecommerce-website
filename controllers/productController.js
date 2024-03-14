@@ -265,14 +265,16 @@ export const productListController = async (req, res) => {
 export const searchProductController = async (req, res) => {
   try {
     const { keyword } = req.params;
+
+    console.log("keyword", keyword);
     const result = await productModel
       .find({
         $or: [
           {
-            name: { $regex: keyword, $option: "i" },
+            name: { $regex: keyword, $options: "i" },
           },
           {
-            description: { $regex: keyword, $option: "i" },
+            description: { $regex: keyword, $options: "i" },
           },
         ],
       })
