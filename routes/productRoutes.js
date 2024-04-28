@@ -12,10 +12,12 @@ import {
   deleteProductController,
   getProductController,
   getSingleProductController,
+  productCategoryController,
   productCountController,
   productFilterController,
   productListController,
   productPhotoController,
+  relatedProductController,
   relatedProductController,
   searchProductController,
   updateProductController,
@@ -67,8 +69,5 @@ router.get("/product-list/:page", productListController);
 
 //search product
 router.get("/search/:keyword", searchProductController);
-
-//related product
-router.get("/related-product/:pid/:cid", relatedProductController);
 
 export default router;

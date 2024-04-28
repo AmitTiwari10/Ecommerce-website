@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import fs from "fs";
 import productModel from "../models/productModel.js";
+import categoryModel from "../models/categoryModel.js";
 
 //create Product
 export const createProductController = async (req, res) => {
@@ -272,6 +273,7 @@ export const searchProductController = async (req, res) => {
         $or: [
           {
             name: { $regex: keyword, $options: "i" },
+            name: { $regex: keyword, $options: "i" },
           },
           {
             description: { $regex: keyword, $options: "i" },
@@ -286,27 +288,6 @@ export const searchProductController = async (req, res) => {
       success: false,
       error,
       message: "Error in searching product api",
-    });
-  }
-};
-
-//Related product
-export const relatedProductController = async (req, res) => {
-  try {
-    const { pid, cid } = req.params;
-    console.log({ pid, cid }  )
-    const products = await productModel
-      .find({ category: cid, _id: { $ne: pid } })
-      .select("-photo")
-      .limit(3)
-      .populate("categories");
-    res.status(200).send({ success: true, products });
-  } catch (error) {
-    console.log(error);
-    res.status(400).send({
-      success: false,
-      error,
-      message: "Error while getting related product",
     });
   }
 };

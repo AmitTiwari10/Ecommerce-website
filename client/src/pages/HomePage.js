@@ -5,7 +5,7 @@ import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices";
 import { useNavigate } from "react-router-dom";
 const HomePage = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -30,15 +30,6 @@ const HomePage = () => {
     getTotal();
   }, []);
 
-  //get total count
-  const getTotal = async () => {
-    try {
-      const { data } = await axios.get("/api/v1/product/product-count");
-      setTotal(data?.total);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
     if (page === 1) return;
     loadmore();
@@ -53,6 +44,15 @@ const HomePage = () => {
       setProducts([...products, ...data?.products]);
     } catch (error) {
       setLoading(false);
+      console.log(error);
+    }
+  };
+  //get total count
+  const getTotal = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/product/product-count");
+      setTotal(data?.total);
+    } catch (error) {
       console.log(error);
     }
   };
@@ -155,7 +155,12 @@ const HomePage = () => {
                   </p>
                   <p className="card-text">$ {p.price}</p>
 
-                  <button className="btn btn-primary ms-1" onClick={()=>navigate(`/product/${p.slug}`)}>More Details</button>
+                  <button
+                    className="btn btn-primary ms-1"
+                    onClick={() => navigate(`/product/${p.slug}`)}
+                  >
+                    More Details
+                  </button>
                   <button className="btn btn-secondary ms-1">
                     ADD TO CART
                   </button>
