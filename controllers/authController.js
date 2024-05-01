@@ -1,3 +1,4 @@
+import mongoose, { Types } from "mongoose";
 import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
 import JWT from "jsonwebtoken";
@@ -91,6 +92,7 @@ export const loginController = async (req, res) => {
       succes: true,
       message: "login Successfully",
       user: {
+        _id: user._id,
         name: user.name,
         email: user.email,
         phone: user.phone,
@@ -151,6 +153,39 @@ export const forgotPasswordController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in Login",
+      error,
+    });
+  }
+};
+
+export const updateProfileController = async (req, res) => {
+  try {
+    const { auth, name, password, address, phone } = req.body;
+    console.log("auth", auth);
+    if (password && password.length < 6) {
+      return res.json({ error: "Password is required and 6 character long" });
+    }
+    const hashedPassword = password ? await hashPassword(password) : undefined;
+    const updatedUser = await userModel.findByIdAndUpdate(
+      auth.user._id,
+      {
+        name: name || auth.user.name,
+        password: hashedPassword || auth.user.password,
+        phone: phone || auth.user.phone,
+        address: address || auth.user.address,
+      },
+      { new: true }
+    );
+    res.status(200).send({
+      success: true,
+      message: "Profile Updated Successfully",
+      updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error while updating profile",
       error,
     });
   }

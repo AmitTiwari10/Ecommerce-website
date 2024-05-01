@@ -5,9 +5,13 @@ import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 import SearchInput from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
+import { useCart } from "../../context/cart";
+import { Badge } from "antd";
 const Header = () => {
   const [auth, setAuth] = useAuth();
   const categories = useCategory();
+  const [cart] = useCart();
+
   const handleLogout = () => {
     setAuth({
       ...auth,
@@ -108,7 +112,7 @@ const Header = () => {
                       <li>
                         <NavLink
                           to={`/dashboard/${
-                            auth?.user?.role === 1 ? "admin" : "user"
+                            auth?.user?.role === 1 ? "admin" : "users"
                           }`}
                           className="dropdown-item"
                         >
@@ -130,10 +134,12 @@ const Header = () => {
                   </li>
                 </>
               )}
-              <li>
-                <NavLink to="/cart" className="nav-link">
-                  cart (0)
-                </NavLink>
+              <li className="nav-item">
+                <Badge count={cart?.length} showZero>
+                  <NavLink to="/cart" className="nav-link">
+                    Cart
+                  </NavLink>
+                </Badge>
               </li>
             </ul>
           </div>

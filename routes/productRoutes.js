@@ -8,6 +8,8 @@ import {
   updateCatrgoryController,
 } from "../controllers/categoryController.js";
 import {
+  braintreePaymentController,
+  braintreeTokenController,
   createProductController,
   deleteProductController,
   getProductController,
@@ -21,6 +23,7 @@ import {
   updateProductController,
 } from "../controllers/productController.js";
 import formidable from "express-formidable";
+import braintree from "braintree";
 
 //router object
 
@@ -71,4 +74,10 @@ router.get("/search/:keyword", searchProductController);
 //category wise product
 router.get("/product-category/:slug", productCategoryController);
 
+//payment
+//token
+router.get("/braintree/token", braintreeTokenController);
+
+//payments
+router.post("/braintree/payment", requireSignIn, braintreePaymentController);
 export default router;
