@@ -16,8 +16,8 @@ dotenv.config();
 connectDB();
 
 //esmodule fix
-const _filename = fileURLToPath(import.meta.url);
-const _dirname = path.dirname(_filename);
+// const _filename = fileURLToPath(import.meta.url);
+// const _dirname = path.dirname(_filename);
 
 //rest object
 const app = express();
@@ -26,7 +26,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "./client/build")));
+// app.use(express.static(path.join(__dirname, "./client/build")));
 
 //routes
 app.use("/api/v1/auth", authRoutes);
