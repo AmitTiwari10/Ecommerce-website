@@ -25,7 +25,9 @@ const app = express();
 //middelwares
 app.use(
   cors({
-    origin: "https://symphonious-klepon-a8132c.netlify.app/", // The origin you want to allow
+    origin: [
+      "https://symphonious-klepon-a8132c.netlify.app/,https://dreamy-sorbet-7a7e6c.netlify.app,https://dreamy-sorbet-7a7e6c.netlify.app/",
+    ], // The origin you want to allow
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers in the request
     exposedHeaders: ["Content-Type", "Authorization"], // Headers to expose in the response
