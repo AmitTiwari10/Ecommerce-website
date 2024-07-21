@@ -30,7 +30,7 @@ app.use(
       "https://dreamy-sorbet-7a7e6c.netlify.app",
       "https://dreamy-sorbet-7a7e6c.netlify.app/",
       "https://ecommerce-website-l239-i0j4a263i-amittiwari10s-projects.vercel.app",
-      "https://ecommerce-website-l239.vercel.app/",
+      "https://ecommerce-website-l239.vercel.app",
     ], // The origin you want to allow
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers in the request
