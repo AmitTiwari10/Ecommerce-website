@@ -23,7 +23,7 @@ const UpdateProducts = () => {
   const getSingleProduct = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}`
+        `${process.env.REACT_APP_API}/api/v1/product/get-product/${params.slug}`
       );
       setName(data.product.name);
       setdescription(data.product.description);
@@ -70,7 +70,7 @@ const UpdateProducts = () => {
       productData.append("category", category);
 
       const { data } = await axios.put(
-        `/api/v1/product/update-product/${id}`,
+        `${process.env.REACT_APP_API}/api/v1/product/update-product/${id}`,
         productData
       );
       if (data?.success) {
@@ -92,9 +92,11 @@ const UpdateProducts = () => {
       if (!answer) {
         return;
       }
-      const { data } = await axios.delete(`/api/v1/product/delete-product/${id}`);
-      toast.success("Product deleted Successfully")
-      navigate("/dashboard/admin/products")
+      const { data } = await axios.delete(
+        `${process.env.REACT_APP_API}/api/v1/product/delete-product/${id}`
+      );
+      toast.success("Product deleted Successfully");
+      navigate("/dashboard/admin/products");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");

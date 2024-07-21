@@ -13,11 +13,14 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`/api/v1/auth/forgot-password`, {
-        email,
-        newPassword,
-        answer,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/auth/forgot-password`,
+        {
+          email,
+          newPassword,
+          answer,
+        }
+      );
       console.log("response", response);
       if (response.data.succes) {
         toast.success(response.data.message);
